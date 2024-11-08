@@ -1,3 +1,4 @@
+import json
 from datetime import datetime
 from time import sleep
 
@@ -13,6 +14,14 @@ from service.repository.repository import Repository
 
 
 class NbpService(LogService):
+    """
+    A singleton service that manages interactions with the NBP API to fetch and store
+    Gold and Dollar prices, and logs these operations.
+
+    This class periodically retrieves data for Gold and Dollar prices using HTTP services
+    and stores the data using repository classes. It also logs these updates and uses threading
+    to manage continuous data retrieval in the background.
+    """
     _nbp_service_instance = None
     _now = datetime.now()
 
@@ -21,7 +30,7 @@ class NbpService(LogService):
             cls._nbp_service_instance = super(NbpService, cls).__new__(cls)
         return cls._nbp_service_instance
 
-    def  __init__(self):
+    def __init__(self):
         self.gold_service: HttpService = NbpGoldHttpService()
         self.dollar_service: HttpService = NbpDollarHttpService()
         self.gold_repository: Repository = GoldFileRepository()
@@ -30,7 +39,7 @@ class NbpService(LogService):
         super().__init__()
         self._init_thread(self.__thread_main)
 
-    def __thread_main(self):
+    def __thread_main(self) -> None:
         while True:
             while self.is_running:
                 gold_response = self.gold_service.get()
@@ -38,27 +47,29 @@ class NbpService(LogService):
                 self.__handle_response(gold_response, dollar_response)
                 sleep(5)
 
-    def __prepare_log(self, gold_price: str, dollar_price: str) -> str:
-        log: str = f"[{self.__class__.__name__}] {self._now.strftime('%Y-%m-%d %H:%M:%S')} : gold price = {gold_price}, dollar price = {dollar_price}"
-        print(log)
+    def __prepare_log(self, gold_price: float, dollar_price: float, date: str) -> str:
+        log: str = f"[{self.__class__.__name__}] {date} : gold price = {gold_price}, dollar price = {dollar_price}"
         return log
 
-    def __handle_response(self, gold_response, dollar_response):
+    def __handle_response(self, gold_response, dollar_response) -> None:
+        date = self.__prepare_date()
         parsed_gold_price = self.__parse_gold_price_response(gold_response)
         parsed_dollar_price = self.__parse_dollar_price_response(dollar_response)
-        json = self.__prepare_log(parsed_gold_price, parsed_dollar_price)
-        self.records.append(json)
-        self.__save_data(parsed_gold_price, parsed_dollar_price)
+
+        self.records.append(self.__prepare_log(parsed_gold_price, parsed_dollar_price, date))
+        self.__save_data(parsed_gold_price, parsed_dollar_price, date)
         self.new_record.set()
         self.set_new_record_event()
 
-    def __save_data(self, gold_price, dollar_price):
-        date = self._now.strftime('%Y-%m-%d %H:%M:%S')
+    def __prepare_date(self) -> str:
+        return self._now.strftime('%Y-%m-%d')
+
+    def __save_data(self, gold_price: float, dollar_price: float, date: str) -> None:
         self.dollar_repository.post(Dollar(0, date, dollar_price))
         self.gold_repository.post(Gold(0, date, gold_price))
 
-    def __parse_gold_price_response(self, response):
+    def __parse_gold_price_response(self, response: json) -> float:
         return response[0].get("cena")
 
-    def __parse_dollar_price_response(self, response):
+    def __parse_dollar_price_response(self, response: json) -> float:
         return response.get("rates")[0].get("mid")

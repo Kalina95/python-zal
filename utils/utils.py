@@ -4,7 +4,7 @@ import pandas as pd
 
 
 def parse(data):
-    parsed_data = [{'date': datetime.strptime(item['date'], '%Y-%m-%d %H:%M:%S').date(), 'price': item['price']}
+    parsed_data = [{'date': datetime.strptime(item['date'], '%Y-%m-%d'), 'price': item['price']}
                    for item in data]
 
     df = pd.DataFrame(parsed_data)
@@ -15,4 +15,3 @@ def parse(data):
 class Utils:
     def __init__(self):
         pass
-

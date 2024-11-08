@@ -1,15 +1,30 @@
-class Repository:
-    def __init__(self):
-        self.storage_uri = None
+from abc import abstractmethod, ABC
+from typing import Any, Optional
 
-    def get(self, key):
-        pass
 
-    def post(self, value):
-        pass
+class Repository(ABC):
+    """
+    An abstract base class that defines a generic interface for data storage operations.
 
-    def delete(self, key):
-        pass
+    This class provides a blueprint for implementing CRUD operations in derived classes.
+    It includes methods for retrieving, posting, deleting, and listing data. Each method
+    must be implemented in a subclass.
+    """
+    def __init__(self) -> None:
+        self.storage_uri: Optional[str] = None
 
-    def get_all(self):
-        pass
+    @abstractmethod
+    def get(self, key: int) -> Any:
+        raise NotImplementedError
+
+    @abstractmethod
+    def post(self, value: Any) -> int:
+        raise NotImplementedError
+
+    @abstractmethod
+    def delete(self, key: int) -> None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_all(self) -> list[str]:
+        raise NotImplementedError

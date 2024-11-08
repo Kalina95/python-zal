@@ -1,13 +1,21 @@
 import json
+from abc import ABC
 
 import requests
 from requests import Response
 
+class HttpService(ABC):
+    """
+    An abstract HTTP service class for making GET requests to a specified endpoint.
 
-class HttpService:
-    def __init__(self):
-        self.base_url = ""
-        self.endpoint = ""
+    This class provides a base for HTTP communication, specifically for retrieving JSON data
+    from a given API endpoint. It constructs the full URL from the provided base URL and endpoint,
+    sends a GET request, and returns the response as JSON.
+    """
+
+    def __init__(self, base_url: str, endpoint: str) -> None:
+        self.base_url: str = base_url
+        self.endpoint: str = endpoint
 
     def get(self) -> json:
         url = f"{self.base_url}/{self.endpoint}"

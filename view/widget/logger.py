@@ -2,23 +2,23 @@ import threading
 import tkinter as tk
 
 from service.log.log_service import LogService
-from view.model.mkframe import MkFrame
-from view.model.mklabel import MkLabel
-from view.model.mkrow import MkRow
-from view.model.mkscrolledtext import MkScrolledText
+from view.model.baseframe import BaseFrame
+from view.model.label import Label
+from view.model.row import Row
+from view.model.textarea import TextArea
 
 
-class Logger(MkFrame):
+class Logger(BaseFrame):
 
-    def __init__(self, parent, service: LogService):
+    def __init__(self, parent: tk.Frame, service: LogService) -> None:
         super().__init__(parent=parent, bg_color="white")
         self.service = service
 
         self.componentAlive = True
-        self.logs_area_row = MkRow(self)
-        self.logs_area = MkScrolledText(self.logs_area_row)
+        self.logs_area_row = Row(self)
+        self.logs_area = TextArea(self.logs_area_row)
         self.logs_area.pack_center()
-        self.status_label = MkLabel("Status: Off", self)
+        self.status_label = Label("Status: Off", self)
         self.__print_previous_logs()
 
         # thread and injection
@@ -26,8 +26,8 @@ class Logger(MkFrame):
         self.logger_thread.start()
 
     def __init_label(self):
-        self.label_row = MkRow(self)
-        self.log_label = MkLabel("Logi zbierane z NbpAPi: ceny złota w danym dniu", self.label_row)
+        self.label_row = Row(self)
+        self.log_label = Label("Logi zbierane z NbpAPi: ceny złota w danym dniu", self.label_row)
         self.log_label.pack_left()
 
     def append_log(self, message):
@@ -39,7 +39,7 @@ class Logger(MkFrame):
 
     def refresh_logs_area(self):
         self.logs_area.destroy_area()
-        self.logs_area = MkScrolledText(self.logs_area_row)
+        self.logs_area = TextArea(self.logs_area_row)
         self.logs_area.pack_center()
 
     def __change_status_label(self):

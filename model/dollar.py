@@ -1,9 +1,21 @@
+from dataclasses import dataclass
+from datetime import datetime
+
+
+@dataclass
 class Dollar:
+    """
+    Represents a dollar price record with unique identifier, date, and price.
+    This class is used to store and manage gold price data fetched from NBP service.
+    """
+    uid: int
+    date: str
+    price: float
 
-    def __init__(self, uid: int, date: str, price: float):
-        self.uid = uid
-        self.date = date
-        self.price = price
-
-    def __str__(self):
-        return f"Dollar: id={self.uid}; date={self.date}; price={self.price}"
+    def __post_init__(self) -> None:
+        if self.price < 0:
+            raise ValueError("Price cannot be negative")
+        try:
+            datetime.strptime(self.date, '%Y-%m-%d')
+        except ValueError:
+            raise ValueError("Date must be in YYYY-MM-DD format")

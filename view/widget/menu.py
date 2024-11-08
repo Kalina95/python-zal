@@ -1,11 +1,11 @@
 from view.widget.nbp_api_view_frame import NbpApiView
-from view.model.mkbutton import MkButton
-from view.model.mkframe import MkFrame
+from view.model.button import Button
+from view.model.baseframe import BaseFrame
 from view.view_styles import MenuStyle
 from view.widget.nbp_results_view_frame import NbpResultsView
 
 
-class Menu(MkFrame):
+class Menu(BaseFrame):
 
     def __init__(self, view_manager):
         super().__init__(parent=view_manager.main_window, bg_color=MenuStyle.background_color)
@@ -15,8 +15,8 @@ class Menu(MkFrame):
 
 
     def __init_buttons(self):
-        self.nbp_api_button = MkButton("NBP API", self.show_nbp_api, self)
-        self.nbp_results_button = MkButton("NBP Results", self.show_nbp_results, self)
+        self.nbp_api_button = Button("NBP API", self.show_nbp_api, self)
+        self.nbp_results_button = Button("NBP Results", self.show_nbp_results, self)
         self.nbp_api_button.pack_center()
         self.nbp_results_button.pack_center()
 
