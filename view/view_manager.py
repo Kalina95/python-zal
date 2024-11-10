@@ -1,7 +1,7 @@
-from service.chart.chart_service import ChartService
-from view.widget.menu import Menu
 from view.model.view import ViewFrame
+
 from view.model.window import Window
+from view.widget.menu import Menu
 
 '''
 MainWindow class contains main elements of GUI:

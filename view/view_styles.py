@@ -10,6 +10,7 @@ class LabelStyle:
     anchor = "w"
     sticky = "nsew"
 
+
 class ButtonStyle:
     width = 20
     height = 2
@@ -20,10 +21,12 @@ class ButtonStyle:
     background_color = "white"
     sticky = "nw"
 
+
 class WindowStyle:
     width = 1500
     height = 500
     background_color = "white"
+
 
 class MenuStyle:
     width = 20
@@ -34,6 +37,7 @@ class MenuStyle:
     font = "Arial"
     background_color = "white"
 
+
 class EntryStyle:
     width = 20
     height = 2
@@ -43,6 +47,7 @@ class EntryStyle:
     font = "Arial"
     background_color = "white"
     sticky = "w"
+
 
 class ViewFrameStyle:
     background_color = "white"
