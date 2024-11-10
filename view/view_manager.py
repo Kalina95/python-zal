@@ -1,5 +1,4 @@
-from view.model.view import ViewFrame
-
+from view.model.viewframe import ViewFrame
 from view.model.window import Window
 from view.widget.menu import Menu
 
@@ -13,7 +12,7 @@ MainWindow class contains main elements of GUI:
 
 class ViewManager:
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.main_window: Window = None
         self.menu_frame: Menu = None
         self.view_frame: ViewFrame = None

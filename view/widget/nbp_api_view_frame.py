@@ -1,7 +1,7 @@
 from service.log.nbp_service import NbpService
-from view.model.view import ViewFrame
 from view.model.button import Button
 from view.model.label import Label
+from view.model.viewframe import ViewFrame
 from view.widget.logger import Logger
 from view.model.row import Row
 
