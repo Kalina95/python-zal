@@ -1,4 +1,4 @@
-from service.log.nbp_service import NbpService
+from service.log.nbp_log_service import NbpLogService
 from view.model.button import Button
 from view.model.label import Label
 from view.model.viewframe import ViewFrame
@@ -9,8 +9,8 @@ from view.model.row import Row
 class NbpApiView(ViewFrame):
 
     def __init__(self, parent):
-        super().__init__(parent=parent.main_window)
-        self.nbp_service = NbpService._nbp_service_instance
+        super().__init__(parent=parent)
+        self.nbp_service = NbpLogService._nbp_service_instance
         self.logger = None
 
         self.__init_title()

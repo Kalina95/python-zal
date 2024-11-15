@@ -24,7 +24,7 @@ class Menu(BaseFrame):
         super().pack(side="left", fill="both", expand=False)
 
     def show_nbp_api(self) -> None :
-        self.view_manager.update_view_frame(NbpApiView(self.view_manager))
+        self.view_manager.update_view_frame(NbpApiView(self.view_manager.main_window))
 
     def show_nbp_results(self) -> None :
-        self.view_manager.update_view_frame(NbpResultsView(self.view_manager))
+        self.view_manager.update_view_frame(NbpResultsView(self.view_manager.main_window))

@@ -43,7 +43,7 @@ class ChartService:
         ax.legend()
 
     def __plot_gold_data(self, ax: Axes) -> None:
-        if not self.__is_gold_data_empty:
+        if not self.__is_gold_data_empty():
             ax.plot(self.gold_data['date'], self.gold_data['price'], label="Gold Price", color="gold", marker="o")
 
     def __plot_dollar_data(self, ax: Axes) -> None:

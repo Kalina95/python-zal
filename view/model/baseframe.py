@@ -14,3 +14,7 @@ class BaseFrame(tk.Frame):
 
     def pack_center(self) -> None:
         self.pack(expand=False, anchor="center")
+
+    def destroy_frame(self) -> None:
+        self.pack_forget()
+        self.destroy()

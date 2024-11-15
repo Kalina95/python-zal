@@ -14,7 +14,7 @@ class Logger(BaseFrame):
         super().__init__(parent=parent, bg_color="white")
         self.service = service
 
-        self.componentAlive = True
+        self.component_alive = True
         self.logs_area_row = Row(self)
         self.logs_area = TextArea(self.logs_area_row)
         self.logs_area.pack_center()
@@ -30,7 +30,7 @@ class Logger(BaseFrame):
         self.log_label.pack_left()
 
     def append_log(self, message: str) -> None:
-        if self.componentAlive:
+        if self.component_alive:
             self.logs_area.config(state="normal")
             self.logs_area.insert(tk.END, message + "\n")
             self.logs_area.see(tk.END)
@@ -52,7 +52,7 @@ class Logger(BaseFrame):
             self.append_log(record)
 
     def __printing_logs(self) -> None:
-        while self.componentAlive:
+        while self.component_alive:
             if self.service.is_running:
                 self.service.new_record.wait()
                 log = self.service.get_last_record()
@@ -60,6 +60,6 @@ class Logger(BaseFrame):
                     self.append_log(log)
 
     def destroy(self) -> None:
-        self.componentAlive = False
+        self.component_alive = False
         self.logger_thread.join(timeout=0.1)
         super().destroy()

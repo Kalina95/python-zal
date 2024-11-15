@@ -18,7 +18,3 @@ class ViewFrame(BaseFrame):
 
     def create_frame(self) -> None:
         super().pack(fill="both", expand=True)
-
-    def destroy_frame(self) -> None:
-        self.pack_forget()
-        self.destroy()

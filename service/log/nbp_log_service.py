@@ -13,7 +13,7 @@ from service.repository.gold_file_repository import GoldFileRepository
 from service.repository.repository import Repository
 
 
-class NbpService(LogService):
+class NbpLogService(LogService):
     """
     A singleton service that manages interactions with the NBP API to fetch and store
     Gold and Dollar prices, and logs these operations.
@@ -27,7 +27,7 @@ class NbpService(LogService):
 
     def __new__(cls, *args, **kwargs):
         if cls._nbp_service_instance is None:
-            cls._nbp_service_instance = super(NbpService, cls).__new__(cls)
+            cls._nbp_service_instance = super(NbpLogService, cls).__new__(cls)
         return cls._nbp_service_instance
 
     def __init__(self):

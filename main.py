@@ -1,4 +1,4 @@
-from service.log.nbp_service import NbpService
+from service.log.nbp_log_service import NbpLogService
 from view.view_manager import ViewManager
 
 '''
@@ -11,6 +11,6 @@ integrates data retrieval, logging, and visualization components.
 '''
 
 # create initializer and assign main window
-nbp_service = NbpService()
+nbp_service = NbpLogService()
 view_manager = ViewManager()
 view_manager.start_application()

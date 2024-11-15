@@ -4,6 +4,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 
 from service.chart.chart_service import ChartService
+from view.model.viewframe import ViewFrame
 
 
 class ChartComponent:
@@ -14,7 +15,7 @@ class ChartComponent:
     charts within a Tkinter parent widget using a separate thread for rendering.
     """
     def __init__(self, parent) -> None:
-        self.parent = parent
+        self.parent: ViewFrame = parent
         self.fig = Figure(figsize=(15, 15), dpi=100)
         self.canvas = FigureCanvasTkAgg(self.fig, master=parent)
         self.chart_service = ChartService()

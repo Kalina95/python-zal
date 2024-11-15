@@ -23,7 +23,7 @@ class ButtonStyle:
 
 
 class WindowStyle:
-    width = 1500
+    width = 800
     height = 500
     background_color = "white"
 
